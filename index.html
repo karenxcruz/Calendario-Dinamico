@@ -30,7 +30,17 @@
                 <p id="selectedDateText">Selecciona un día en el calendario.</p>
                 
                 <div class="task-form">
-    <input type="text" id="subjectInput" placeholder="Asignatura (Ej: Pedagogía)">
+    <select id="subjectInput">
+        <option value="" disabled selected>Selecciona la asignatura...</option>
+        <option value="Aprender a través de metodologías activas">Aprender a través de las metodologías activas - PER 150557</option>
+        <option value="Aula de información general">Aula de información general - PER 150557</option>
+        <option value="Compromiso social sostenible">Compromiso social sostenible a través de metodologías activas - PER 150557</option>
+        <option value="Investigación científica y práctica docente">Educación informada: Investigación científica y práctica docente - PER 150557</option>
+        <option value="Desarrollo del pensamiento crítico">Estrategias metodológicas para el desarrollo del pensamiento crítico... - PER 150557</option>
+        <option value="Desarrollo de competencia digital">Integración de metodologías para el desarrollo de la competencia digital - PER 150557</option>
+        <option value="Prácticas académicas externas">Prácticas académicas externas - PER 150557</option>
+        <option value="Trabajo fin máster">Trabajo fin máster - PER 150557</option>
+    </select>
     
     <select id="categoryInput">
         <option value="" disabled selected>Categoría de la actividad...</option>
@@ -41,7 +51,16 @@
         <option value="Lectura">Lectura / Documentación</option>
     </select>
 
-    <input type="time" id="timeInput" title="Hora de la actividad">
+    <div class="time-container">
+        <div class="time-box">
+            <label>Hora (Inicio):</label>
+            <input type="time" id="timeInput" title="Hora de inicio">
+        </div>
+        <div class="time-box" id="endTimeContainer" style="display: none;">
+            <label>Hora (Fin):</label>
+            <input type="time" id="endTimeInput" title="Hora de fin">
+        </div>
+    </div>
 
     <textarea id="descInput" placeholder="Pequeña descripción (Ej: Leer capítulo 2 y hacer resumen)"></textarea>
     

@@ -284,3 +284,35 @@ main {
         align-items: center;
     }
 }
+
+/* =========================================
+   8. CORRECCIONES VISUALES Y NUEVOS CAMPOS
+   ========================================= */
+/* Ajuste para que la lista de tareas no desconfigure el panel */
+.tasks-section {
+    display: flex;
+    flex-direction: column;
+    max-height: 800px;
+}
+#taskList {
+    overflow-y: auto;
+    padding-right: 5px;
+    margin-top: 10px;
+    flex-grow: 1;
+}
+/* Estilo para los campos de hora */
+.time-container {
+    display: flex;
+    gap: 10px;
+}
+.time-box {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.time-box label {
+    font-size: 12px;
+    color: #64748b;
+    margin-bottom: 4px;
+    font-weight: bold;
+}
