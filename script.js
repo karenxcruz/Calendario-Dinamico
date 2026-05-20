@@ -2,16 +2,17 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebas
 import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
 
 // ==========================================
-// 1. CONFIGURACIÓN DE FIREBASE (Reemplaza con tus datos)
+// 1. CONFIGURACIÓN DE FIREBASE
 // ==========================================
 const firebaseConfig = {
-  apiKey: "TU_API_KEY",
-  authDomain: "TU_PROYECTO.firebaseapp.com",
-  databaseURL: "https://TU_PROYECTO-default-rtdb.firebaseio.com", // <-- ¡Muy importante!
-  projectId: "TU_PROYECTO",
-  storageBucket: "TU_PROYECTO.appspot.com",
-  messagingSenderId: "TU_SENDER_ID",
-  appId: "TU_APP_ID"
+  apiKey: "AIzaSyC4q-0JiUoZuR9bjGK62Y7j3nFG-g8bCkU",
+  authDomain: "calendario-urbelania.firebaseapp.com",
+  databaseURL: "https://calendario-urbelania-default-rtdb.firebaseio.com", // <-- Añadida para que funcione Realtime Database
+  projectId: "calendario-urbelania",
+  storageBucket: "calendario-urbelania.firebasestorage.app",
+  messagingSenderId: "543321584707",
+  appId: "1:543321584707:web:84c4da88004ba5c4ca50f6",
+  measurementId: "G-REJQ1C708H"
 };
 
 // Inicializar Firebase y la Base de Datos
