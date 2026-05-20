@@ -1,3 +1,27 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+
+// ==========================================
+// 1. CONFIGURACIÓN DE FIREBASE (Reemplaza con tus datos)
+// ==========================================
+const firebaseConfig = {
+  apiKey: "TU_API_KEY",
+  authDomain: "TU_PROYECTO.firebaseapp.com",
+  databaseURL: "https://TU_PROYECTO-default-rtdb.firebaseio.com", // <-- ¡Muy importante!
+  projectId: "TU_PROYECTO",
+  storageBucket: "TU_PROYECTO.appspot.com",
+  messagingSenderId: "TU_SENDER_ID",
+  appId: "TU_APP_ID"
+};
+
+// Inicializar Firebase y la Base de Datos
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const tareasRef = ref(db, 'calendario/tareas_urbelania');
+
+// ==========================================
+// 2. VARIABLES Y ELEMENTOS DEL DOM
+// ==========================================
 const monthYear = document.getElementById('monthYear');
 const daysContainer = document.getElementById('daysContainer');
 const selectedDateText = document.getElementById('selectedDateText');
@@ -13,8 +37,9 @@ const addTaskBtn = document.getElementById('addTaskBtn');
 
 let currentDate = new Date();
 let selectedDate = null;
-let tasks = JSON.parse(localStorage.getItem('tareasUrbelaniaV4')) || {}; // V4 para los nuevos campos
+let tasks = {};
 
+// Diccionarios de colores y estilos
 const categoryToDotClass = {
     "Clase en directo": "cat-clase",
     "Actividad": "cat-actividad",
@@ -31,16 +56,41 @@ const categoryToCardClass = {
     "Lectura": "Lectura"
 };
 
-// Mostrar/Ocultar hora de fin según la categoría
+// ==========================================
+// 3. CONEXIÓN EN TIEMPO REAL CON FIREBASE
+// ==========================================
+// Escuchar cambios: Si Juan agrega algo, esto actualiza tu pantalla automáticamente
+onValue(tareasRef, (snapshot) => {
+    const data = snapshot.val();
+    if (data) {
+        tasks = data;
+    } else {
+        tasks = {};
+    }
+    renderCalendar();
+    renderTasks();
+});
+
+// Guardar cambios en la nube
+function saveToFirebase() {
+    set(tareasRef, tasks).catch(error => console.error("Error guardando en Firebase:", error));
+}
+
+// ==========================================
+// 4. LÓGICA DE LA INTERFAZ
+// ==========================================
+
+// Mostrar/Ocultar hora de fin si es "Clase en directo"
 categoryInput.addEventListener('change', (e) => {
     if (e.target.value === 'Clase en directo') {
         endTimeContainer.style.display = 'flex';
     } else {
         endTimeContainer.style.display = 'none';
-        endTimeInput.value = ''; // Limpiar si cambia de categoría
+        endTimeInput.value = ''; 
     }
 });
 
+// Dibuja el calendario del mes actual
 function renderCalendar() {
     const year = currentDate.getFullYear();
     const month = currentDate.getMonth();
@@ -51,10 +101,12 @@ function renderCalendar() {
     monthYear.textContent = `${monthNames[month]} ${year}`;
     daysContainer.innerHTML = '';
 
+    // Espacios vacíos antes del primer día
     for (let i = 0; i < firstDay; i++) {
         daysContainer.innerHTML += `<div></div>`;
     }
 
+    // Dibujar los días del mes
     for (let i = 1; i <= daysInMonth; i++) {
         const dayDiv = document.createElement('div');
         
@@ -71,6 +123,7 @@ function renderCalendar() {
             dayDiv.classList.add('selected');
         }
 
+        // Si hay tareas ese día, poner las etiquetas visuales
         if (tasks[dateString] && tasks[dateString].length > 0) {
             tasks[dateString].forEach(task => {
                 const pill = document.createElement('div');
@@ -88,6 +141,7 @@ function renderCalendar() {
             });
         }
 
+        // Seleccionar un día para ver su detalle
         dayDiv.addEventListener('click', () => {
             selectedDate = dateString;
             selectedDateText.textContent = `Detalle para el ${i} de ${monthNames[month]}`;
@@ -98,8 +152,10 @@ function renderCalendar() {
     }
 }
 
+// Dibuja las tarjetas de actividades en el panel derecho
 function renderTasks() {
     taskList.innerHTML = '';
+    
     if (!selectedDate) {
          taskList.innerHTML = '<p style="text-align:center; color:#94a3b8; font-style:italic;">Selecciona una fecha para ver sus actividades.</p>';
          return;
@@ -109,6 +165,7 @@ function renderTasks() {
          return;
     }
 
+    // Ordenar cronológicamente
     const sortedTasks = [...tasks[selectedDate]].sort((a, b) => {
         if (!a.hora) return 1;
         if (!b.hora) return -1;
@@ -125,7 +182,7 @@ function renderTasks() {
         const statusClass = task.estado === 'Completado' ? 'status-completado' : 'status-pendiente';
         const statusIcon = task.estado === 'Completado' ? '<i class="fa-solid fa-circle-check"></i>' : '<i class="fa-regular fa-circle"></i>';
         
-        // Formato visual de la hora
+        // Armar el texto de la hora
         let horaVisual = '';
         if (task.hora && task.horaFin) {
             horaVisual = `<strong><i class="fa-regular fa-clock"></i> ${task.hora} a ${task.horaFin}</strong> - `;
@@ -140,10 +197,10 @@ function renderTasks() {
             </div>
             <div class="task-desc">${task.descripcion || 'Sin descripción'}</div>
             <div class="task-actions">
-                <div class="status-toggle ${statusClass}" onclick="toggleStatus('${selectedDate}', ${originalIndex})">
+                <div class="status-toggle ${statusClass}" onclick="window.toggleStatus('${selectedDate}', ${originalIndex})">
                     ${statusIcon} ${task.estado}
                 </div>
-                <button class="delete-btn" onclick="deleteTask('${selectedDate}', ${originalIndex})">
+                <button class="delete-btn" onclick="window.deleteTask('${selectedDate}', ${originalIndex})">
                     <i class="fa-solid fa-trash-can"></i>
                 </button>
             </div>
@@ -152,38 +209,28 @@ function renderTasks() {
     });
 }
 
+// ==========================================
+// 5. ACCIONES (Guardar, Eliminar, Completar)
+// ==========================================
+
+// Funciones globales (window) necesarias para que funcionen desde el HTML generado dinámicamente
 window.toggleStatus = function(date, index) {
     if (tasks[date][index].estado === 'Pendiente') {
         tasks[date][index].estado = 'Completado';
     } else {
         tasks[date][index].estado = 'Pendiente';
     }
-    saveAndRender();
+    saveToFirebase();
 }
 
 window.deleteTask = function(date, index) {
     if(confirm('¿Estás seguro de eliminar esta actividad?')) {
         tasks[date].splice(index, 1);
-        saveAndRender();
+        saveToFirebase();
     }
 }
 
-function saveAndRender() {
-    localStorage.setItem('tareasUrbelaniaV4', JSON.stringify(tasks));
-    renderTasks();
-    renderCalendar();
-}
-
-document.getElementById('prevMonth').addEventListener('click', () => {
-    currentDate.setMonth(currentDate.getMonth() - 1);
-    renderCalendar();
-});
-
-document.getElementById('nextMonth').addEventListener('click', () => {
-    currentDate.setMonth(currentDate.getMonth() + 1);
-    renderCalendar();
-});
-
+// Agregar nueva tarea
 addTaskBtn.addEventListener('click', () => {
     if (!selectedDate) {
         alert('Por favor selecciona un día en el calendario primero.');
@@ -207,20 +254,32 @@ addTaskBtn.addEventListener('click', () => {
         asignatura: asignatura,
         categoria: categoria,
         hora: hora,
-        horaFin: horaFin, // Nueva variable guardada
+        horaFin: horaFin,
         descripcion: descripcion,
         estado: 'Pendiente' 
     });
 
+    // Limpiar campos del formulario
     subjectInput.value = '';
     categoryInput.value = '';
     timeInput.value = '';
     endTimeInput.value = '';
-    endTimeContainer.style.display = 'none'; // Volver a ocultar al guardar
+    endTimeContainer.style.display = 'none';
     descInput.value = '';
 
-    saveAndRender();
+    saveToFirebase();
 });
 
+// Navegación entre meses
+document.getElementById('prevMonth').addEventListener('click', () => {
+    currentDate.setMonth(currentDate.getMonth() - 1);
+    renderCalendar();
+});
+
+document.getElementById('nextMonth').addEventListener('click', () => {
+    currentDate.setMonth(currentDate.getMonth() + 1);
+    renderCalendar();
+});
+
+// Iniciar interfaz
 renderCalendar();
-renderTasks();
