@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario Académico - Urbelania</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Calendario de Estudio - Máster</h1>
+        </header>
+        <main>
+            <div class="calendar-section">
+                <div class="month-header">
+                    <button id="prevMonth">&lt; Anterior</button>
+                    <h2 id="monthYear"></h2>
+                    <button id="nextMonth">Siguiente &gt;</button>
+                </div>
+                <div class="weekdays">
+                    <div>Dom</div><div>Lun</div><div>Mar</div><div>Mié</div><div>Jue</div><div>Vie</div><div>Sáb</div>
+                </div>
+                <div class="days" id="daysContainer"></div>
+            </div>
+
+            <div class="tasks-section">
+                <h3>Actividades del Día</h3>
+                <p id="selectedDateText">Selecciona un día en el calendario para ver o agregar tareas.</p>
+                <div class="add-task">
+                    <input type="text" id="taskInput" placeholder="Ej: Leer módulo 1...">
+                    <button id="addTaskBtn">Añadir</button>
+                </div>
+                <ul id="taskList"></ul>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

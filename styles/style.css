@@ -1,0 +1,104 @@
+body { 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    background-color: #f1f5f9; 
+    margin: 0; 
+    padding: 20px; 
+    color: #334155; 
+}
+.container { 
+    max-width: 1000px; 
+    margin: auto; 
+    background: white; 
+    border-radius: 15px; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05); 
+    padding: 30px; 
+}
+header h1 { 
+    text-align: center; 
+    color: #bc84ee; /* Morado pastel */
+    margin-top: 0; 
+    font-size: 32px;
+}
+main { 
+    display: flex; 
+    gap: 30px; 
+    flex-wrap: wrap; 
+}
+.calendar-section { flex: 2; min-width: 350px; }
+.tasks-section { 
+    flex: 1; 
+    min-width: 300px; 
+    background: #fdf2f8; /* Rosa pastel */
+    padding: 20px; 
+    border-radius: 12px; 
+}
+.month-header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 20px; 
+}
+.month-header button { 
+    background: #ff823a; /* Naranja amigable */
+    color: white; 
+    border: none; 
+    padding: 8px 15px; 
+    border-radius: 8px; 
+    cursor: pointer; 
+    font-weight: bold;
+}
+.weekdays, .days { 
+    display: grid; 
+    grid-template-columns: repeat(7, 1fr); 
+    gap: 8px; 
+    text-align: center; 
+}
+.weekdays div { font-weight: bold; color: #64748b; margin-bottom: 10px;}
+.days div { 
+    padding: 15px 5px; 
+    background: #f8fafc; 
+    border-radius: 8px; 
+    cursor: pointer; 
+    transition: all 0.2s; 
+    border: 1px solid #e2e8f0;
+}
+.days div:hover { background: #dcfd8b; /* Verde lima */ }
+.days .selected { background: #bc84ee; color: white; font-weight: bold; }
+.days .has-task { border-bottom: 4px solid #ff823a; } /* Subraya días con tareas */
+
+.add-task { display: flex; gap: 10px; margin-bottom: 20px; }
+.add-task input { 
+    flex: 1; 
+    padding: 10px; 
+    border: 1px solid #cbd5e1; 
+    border-radius: 8px; 
+}
+.add-task button { 
+    background: #10b981; /* Verde éxito */
+    color: white; 
+    border: none; 
+    padding: 10px; 
+    border-radius: 8px; 
+    cursor: pointer; 
+}
+ul { list-style: none; padding: 0; }
+li { 
+    background: white; 
+    margin-bottom: 10px; 
+    padding: 12px; 
+    border-radius: 8px; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    border-left: 5px solid #bc84ee; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+li button { 
+    background: #ef4444; 
+    color: white;
+    border: none; 
+    border-radius: 4px;
+    padding: 5px 8px;
+    cursor: pointer; 
+    font-size: 12px;
+}
