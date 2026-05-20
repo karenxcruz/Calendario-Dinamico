@@ -1,3 +1,6 @@
+/* =========================================
+   1. VARIABLES Y ESTILOS GENERALES
+   ========================================= */
 body { 
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
     background-color: #f1f5f9; 
@@ -6,7 +9,7 @@ body {
     color: #334155; 
 }
 .container { 
-    max-width: 1000px; 
+    max-width: 1100px; 
     margin: auto; 
     background: white; 
     border-radius: 15px; 
@@ -15,7 +18,7 @@ body {
 }
 header h1 { 
     text-align: center; 
-    color: #bc84ee; /* Morado pastel */
+    color: #bc84ee; 
     margin-top: 0; 
     font-size: 32px;
 }
@@ -24,11 +27,18 @@ main {
     gap: 30px; 
     flex-wrap: wrap; 
 }
-.calendar-section { flex: 2; min-width: 350px; }
+
+/* =========================================
+   2. ESTRUCTURA DEL CALENDARIO Y PANEL
+   ========================================= */
+.calendar-section { 
+    flex: 1.5; 
+    min-width: 350px; 
+}
 .tasks-section { 
     flex: 1; 
-    min-width: 300px; 
-    background: #fdf2f8; /* Rosa pastel */
+    min-width: 350px; 
+    background: #fdf2f8; 
     padding: 20px; 
     border-radius: 12px; 
 }
@@ -39,7 +49,7 @@ main {
     margin-bottom: 20px; 
 }
 .month-header button { 
-    background: #ff823a; /* Naranja amigable */
+    background: #ff823a; 
     color: white; 
     border: none; 
     padding: 8px 15px; 
@@ -47,58 +57,230 @@ main {
     cursor: pointer; 
     font-weight: bold;
 }
+
+/* =========================================
+   3. CUADRÍCULA DE DÍAS Y ETIQUETAS
+   ========================================= */
 .weekdays, .days { 
     display: grid; 
     grid-template-columns: repeat(7, 1fr); 
     gap: 8px; 
     text-align: center; 
 }
-.weekdays div { font-weight: bold; color: #64748b; margin-bottom: 10px;}
-.days div { 
-    padding: 15px 5px; 
+/* Agregamos el > para que no afecte a los elementos internos */
+.weekdays > div { 
+    font-weight: bold; 
+    color: #64748b; 
+    margin-bottom: 10px;
+}
+/* Agregamos el > para arreglar el problema de las cajas dobles */
+.days > div { 
+    padding: 5px; 
     background: #f8fafc; 
     border-radius: 8px; 
     cursor: pointer; 
     transition: all 0.2s; 
     border: 1px solid #e2e8f0;
+    min-height: 85px; 
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 3px;
 }
-.days div:hover { background: #dcfd8b; /* Verde lima */ }
-.days .selected { background: #bc84ee; color: white; font-weight: bold; }
-.days .has-task { border-bottom: 4px solid #ff823a; } /* Subraya días con tareas */
-
-.add-task { display: flex; gap: 10px; margin-bottom: 20px; }
-.add-task input { 
-    flex: 1; 
-    padding: 10px; 
-    border: 1px solid #cbd5e1; 
-    border-radius: 8px; 
+.days > div:hover { 
+    background: #dcfd8b; 
 }
-.add-task button { 
-    background: #10b981; /* Verde éxito */
-    color: white; 
-    border: none; 
-    padding: 10px; 
-    border-radius: 8px; 
-    cursor: pointer; 
+.days > .selected { 
+    border: 2px solid #bc84ee; 
+    background: #faf5ff; 
 }
-ul { list-style: none; padding: 0; }
-li { 
-    background: white; 
-    margin-bottom: 10px; 
-    padding: 12px; 
-    border-radius: 8px; 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center;
-    border-left: 5px solid #bc84ee; 
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+.day-number {
+    font-weight: bold;
+    text-align: right;
+    margin-bottom: 2px;
+    color: #64748b;
+    padding-right: 5px;
 }
-li button { 
-    background: #ef4444; 
-    color: white;
-    border: none; 
+.event-pill {
+    font-size: 11px;
+    padding: 4px 6px;
     border-radius: 4px;
-    padding: 5px 8px;
-    cursor: pointer; 
-    font-size: 12px;
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1); /* Le puse una sombrita leve para que resalte más */
+}
+/* Así se verá cuando marques completado en el panel lateral */
+.event-pill.completed {
+    opacity: 0.4;
+    text-decoration: line-through;
+}
+
+/* =========================================
+   4. FORMULARIO DE TAREAS
+   ========================================= */
+.task-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 25px;
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+.task-form input, .task-form select, .task-form textarea {
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-family: inherit;
+}
+.task-form textarea {
+    resize: vertical;
+    min-height: 60px;
+}
+.task-form button {
+    background: #10b981;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+/* =========================================
+   5. TARJETAS DE ACTIVIDADES (DETALLE)
+   ========================================= */
+.task-card {
+    background: white;
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 10px;
+    border-left: 5px solid #ccc; 
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+.task-subject {
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #1e293b;
+}
+.task-category {
+    font-size: 0.8em;
+    padding: 3px 8px;
+    background: #f1f5f9;
+    border-radius: 12px;
+    color: #475569;
+}
+.task-desc {
+    color: #64748b;
+    font-size: 0.95em;
+    margin-bottom: 12px;
+    line-height: 1.4;
+}
+.task-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 10px;
+}
+.status-toggle {
+    cursor: pointer;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.status-pendiente { color: #f59e0b; }
+.status-completado { color: #10b981; text-decoration: line-through; }
+.delete-btn {
+    background: transparent;
+    color: #ef4444;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1em;
+}
+.delete-btn:hover { color: #b91c1c; }
+
+/* =========================================
+   6. COLORES POR CATEGORÍA
+   ========================================= */
+/* Colores para las etiquetas en el calendario */
+.cat-clase { background-color: #3b82f6; } 
+.cat-actividad { background-color: #10b981; } 
+.cat-examen { background-color: #ef4444; } 
+.cat-foro { background-color: #f59e0b; } 
+.cat-lectura { background-color: #8b5cf6; }
+
+/* Colores para el borde de las tarjetas en el panel lateral */
+.task-card.Clase { border-left-color: #3b82f6; }
+.task-card.Actividad { border-left-color: #10b981; }
+.task-card.Examen { border-left-color: #ef4444; }
+.task-card.Foro { border-left-color: #f59e0b; }
+.task-card.Lectura { border-left-color: #8b5cf6; }
+
+
+/* =========================================
+   7. DISEÑO RESPONSIVE (MÓVILES)
+   ========================================= */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    .container {
+        padding: 15px;
+    }
+    main {
+        flex-direction: column; /* Apila el calendario arriba y las tareas abajo */
+    }
+    .calendar-section, .tasks-section {
+        flex: 1;
+        width: 100%;
+        min-width: 100%;
+    }
+    header h1 {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+    /* Ajustamos el calendario para que quepa sin desbordarse */
+    .weekdays, .days {
+        gap: 4px; 
+    }
+    .weekdays > div {
+        font-size: 12px;
+        margin-bottom: 5px;
+    }
+    .days > div {
+        min-height: 65px;
+        padding: 3px;
+    }
+    .day-number {
+        font-size: 12px;
+    }
+    .event-pill {
+        font-size: 9px;
+        padding: 2px 4px;
+    }
+    
+    /* Ajustes para las tarjetas de tareas en celular */
+    .task-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    .task-actions {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
 }

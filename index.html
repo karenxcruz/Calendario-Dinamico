@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calendario Académico - Urbelania</title>
     <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Calendario de Estudio - Máster</h1>
+            <h1>Calendario dinamico - Máster</h1>
         </header>
         <main>
             <div class="calendar-section">
@@ -25,13 +26,29 @@
             </div>
 
             <div class="tasks-section">
-                <h3>Actividades del Día</h3>
-                <p id="selectedDateText">Selecciona un día en el calendario para ver o agregar tareas.</p>
-                <div class="add-task">
-                    <input type="text" id="taskInput" placeholder="Ej: Leer módulo 1...">
-                    <button id="addTaskBtn">Añadir</button>
-                </div>
-                <ul id="taskList"></ul>
+                <h3>Actividades del día</h3>
+                <p id="selectedDateText">Selecciona un día en el calendario.</p>
+                
+                <div class="task-form">
+    <input type="text" id="subjectInput" placeholder="Asignatura (Ej: Pedagogía)">
+    
+    <select id="categoryInput">
+        <option value="" disabled selected>Categoría de la actividad...</option>
+        <option value="Clase en directo">Clase en directo</option>
+        <option value="Actividad">Envío de Actividad</option>
+        <option value="Examen">Examen / Cuestionario</option>
+        <option value="Foro">Participación en Foro</option>
+        <option value="Lectura">Lectura / Documentación</option>
+    </select>
+
+    <input type="time" id="timeInput" title="Hora de la actividad">
+
+    <textarea id="descInput" placeholder="Pequeña descripción (Ej: Leer capítulo 2 y hacer resumen)"></textarea>
+    
+    <button id="addTaskBtn">Guardar Actividad</button>
+</div>
+
+                <div id="taskList"></div>
             </div>
         </main>
     </div>
