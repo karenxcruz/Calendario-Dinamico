@@ -28,7 +28,7 @@ Este proyecto web permite visualizar rápidamente las actividades del mes, categ
 ## 🚀 Despliegue en Vivo
 
 El proyecto está configurado para ser alojado como un sitio web estático. Puedes acceder a la versión en vivo alojada en Render a través del siguiente enlace:
-👉 **[Enlace a tu proyecto en Render]** *(Nota: Actualizar este enlace cuando Render genere la URL)*
+👉 https://calendario-dinamico.onrender.com
 
 ## 💻 Arrancar localmente
 👉  python -m http.server
