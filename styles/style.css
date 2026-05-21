@@ -16,21 +16,54 @@ body {
     box-shadow: 0 10px 25px rgba(0,0,0,0.05); 
     padding: 30px; 
 }
+
+/* =========================================
+   2. ENCABEZADO Y BOTÓN DE NAVEGACIÓN
+   ========================================= */
+.header-content {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px dashed #e2e8f0; 
+}
 header h1 { 
-    text-align: center; 
     color: #bc84ee; 
-    margin-top: 0; 
+    margin: 0; 
     font-size: 32px;
 }
+.btn-enlace {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px; 
+    background-color: #f1f5f9; 
+    color: #475569;
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+.btn-enlace:hover {
+    background-color: #bc84ee; 
+    color: white;
+    border-color: #bc84ee;
+    transform: translateY(-2px); 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* =========================================
+   3. ESTRUCTURA DEL CALENDARIO Y PANEL
+   ========================================= */
 main { 
     display: flex; 
     gap: 30px; 
     flex-wrap: wrap; 
 }
-
-/* =========================================
-   2. ESTRUCTURA DEL CALENDARIO Y PANEL
-   ========================================= */
 .calendar-section { 
     flex: 1.5; 
     min-width: 350px; 
@@ -41,6 +74,9 @@ main {
     background: #fdf2f8; 
     padding: 20px; 
     border-radius: 12px; 
+    display: flex;
+    flex-direction: column;
+    max-height: 800px;
 }
 .month-header { 
     display: flex; 
@@ -59,7 +95,7 @@ main {
 }
 
 /* =========================================
-   3. CUADRÍCULA DE DÍAS Y ETIQUETAS
+   4. CUADRÍCULA DE DÍAS Y ETIQUETAS
    ========================================= */
 .weekdays, .days { 
     display: grid; 
@@ -67,13 +103,11 @@ main {
     gap: 8px; 
     text-align: center; 
 }
-/* Agregamos el > para que no afecte a los elementos internos */
 .weekdays > div { 
     font-weight: bold; 
     color: #64748b; 
     margin-bottom: 10px;
 }
-/* Agregamos el > para arreglar el problema de las cajas dobles */
 .days > div { 
     padding: 5px; 
     background: #f8fafc; 
@@ -110,16 +144,15 @@ main {
     overflow: hidden;
     text-overflow: ellipsis;
     text-align: left;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.1); /* Le puse una sombrita leve para que resalte más */
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1); 
 }
-/* Así se verá cuando marques completado en el panel lateral */
 .event-pill.completed {
     opacity: 0.4;
     text-decoration: line-through;
 }
 
 /* =========================================
-   4. FORMULARIO DE TAREAS
+   5. FORMULARIO DE TAREAS Y LISTA
    ========================================= */
 .task-form {
     display: flex;
@@ -151,9 +184,30 @@ main {
     font-weight: bold;
     margin-top: 5px;
 }
+.time-container {
+    display: flex;
+    gap: 10px;
+}
+.time-box {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.time-box label {
+    font-size: 12px;
+    color: #64748b;
+    margin-bottom: 4px;
+    font-weight: bold;
+}
+#taskList {
+    overflow-y: auto;
+    padding-right: 5px;
+    margin-top: 10px;
+    flex-grow: 1;
+}
 
 /* =========================================
-   5. TARJETAS DE ACTIVIDADES (DETALLE)
+   6. TARJETAS DE ACTIVIDADES (DETALLE)
    ========================================= */
 .task-card {
     background: white;
@@ -213,127 +267,37 @@ main {
 .delete-btn:hover { color: #b91c1c; }
 
 /* =========================================
-   6. COLORES POR CATEGORÍA
+   7. COLORES POR CATEGORÍA
    ========================================= */
-/* Colores para las etiquetas en el calendario */
-/* Colores para las etiquetas en el calendario */
 .cat-clase { background-color: #3b82f6; } 
 .cat-actividad { background-color: #10b981; } 
 .cat-examen { background-color: #ef4444; } 
 .cat-foro { background-color: #f59e0b; } 
 .cat-lectura { background-color: #8b5cf6; }
-.cat-otra { background-color: #475569; } 
+.cat-otra { background-color: #475569; }
 
-/* Colores para el borde de las tarjetas en el panel lateral */
 .task-card.Clase { border-left-color: #3b82f6; }
 .task-card.Actividad { border-left-color: #10b981; }
 .task-card.Examen { border-left-color: #ef4444; }
 .task-card.Foro { border-left-color: #f59e0b; }
 .task-card.Lectura { border-left-color: #8b5cf6; }
-.task-card.Otra { border-left-color: #475569; } 
-
+.task-card.Otra { border-left-color: #475569; }
 
 /* =========================================
-   7. DISEÑO RESPONSIVE (MÓVILES)
+   8. DISEÑO RESPONSIVE (MÓVILES)
    ========================================= */
 @media (max-width: 768px) {
-    body {
-        padding: 10px;
-    }
-    .container {
-        padding: 15px;
-    }
-    main {
-        flex-direction: column; /* Apila el calendario arriba y las tareas abajo */
-    }
-    .calendar-section, .tasks-section {
-        flex: 1;
-        width: 100%;
-        min-width: 100%;
-    }
-    header h1 {
-        font-size: 24px;
-        margin-bottom: 15px;
-    }
-    /* Ajustamos el calendario para que quepa sin desbordarse */
-    .weekdays, .days {
-        gap: 4px; 
-    }
-    .weekdays > div {
-        font-size: 12px;
-        margin-bottom: 5px;
-    }
-    .days > div {
-        min-height: 65px;
-        padding: 3px;
-    }
-    .day-number {
-        font-size: 12px;
-    }
-    .event-pill {
-        font-size: 9px;
-        padding: 2px 4px;
-    }
-    
-    /* Ajustes para las tarjetas de tareas en celular */
-    .task-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 5px;
-    }
-    .task-actions {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-    }
-}
-
-/* =========================================
-   8. CORRECCIONES VISUALES Y NUEVOS CAMPOS
-   ========================================= */
-/* Ajuste para que la lista de tareas no desconfigure el panel */
-.tasks-section {
-    display: flex;
-    flex-direction: column;
-    max-height: 800px;
-}
-#taskList {
-    overflow-y: auto;
-    padding-right: 5px;
-    margin-top: 10px;
-    flex-grow: 1;
-}
-/* Estilo para los campos de hora */
-.time-container {
-    display: flex;
-    gap: 10px;
-}
-.time-box {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-.time-box label {
-    font-size: 12px;
-    color: #64748b;
-    margin-bottom: 4px;
-    font-weight: bold;
-}
-
-
-/* Botón para cambiar de calendario */
-.btn-enlace {
-    display: inline-block;
-    background-color: #6366f1;
-    color: white;
-    text-decoration: none;
-    padding: 8px 15px;
-    border-radius: 8px;
-    font-weight: bold;
-    font-size: 14px;
-    margin-top: 10px;
-    transition: background 0.3s;
-}
-.btn-enlace:hover {
-    background-color: #4f46e5;
+    body { padding: 10px; }
+    .container { padding: 15px; }
+    .header-content { flex-direction: column; gap: 15px; text-align: center; }
+    main { flex-direction: column; }
+    .calendar-section, .tasks-section { flex: 1; width: 100%; min-width: 100%; }
+    header h1 { font-size: 24px; }
+    .weekdays, .days { gap: 4px; }
+    .weekdays > div { font-size: 12px; margin-bottom: 5px; }
+    .days > div { min-height: 65px; padding: 3px; }
+    .day-number { font-size: 12px; }
+    .event-pill { font-size: 9px; padding: 2px 4px; }
+    .task-header { flex-direction: column; align-items: flex-start; gap: 5px; }
+    .task-actions { flex-direction: row; justify-content: space-between; align-items: center; }
 }
