@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Calendario Personal</title>
+    <link rel="stylesheet" href="style2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Mi Espacio Personal</h1>
+        </header>
+        <main>
+            <div class="calendar-section">
+                <div class="month-header">
+                    <button id="prevMonth">&lt; Anterior</button>
+                    <h2 id="monthYear"></h2>
+                    <button id="nextMonth">Siguiente &gt;</button>
+                </div>
+                <div class="weekdays">
+                    <div>Dom</div><div>Lun</div><div>Mar</div><div>Mié</div><div>Jue</div><div>Vie</div><div>Sáb</div>
+                </div>
+                <div class="days" id="daysContainer"></div>
+            </div>
+
+            <div class="tasks-section">
+                <h3>Actividades del día</h3>
+                <p id="selectedDateText">Selecciona un día en el calendario.</p>
+                
+                <div class="task-form">
+                    <input type="text" id="subjectInput" placeholder="¿Qué vas a hacer? (Ej: Turno Clínica, Programar, Gym...)">
+                    
+                    <select id="categoryInput">
+                        <option value="" disabled selected>Categoría...</option>
+                        <option value="Trabajo">Trabajo</option>
+                        <option value="Estudio">Estudio</option>
+                        <option value="Personal">Personal / Ocio</option>
+                        <option value="Hogar">Hogar / Finanzas</option>
+                        <option value="Otra">Otra</option>
+                    </select>
+
+                    <div class="time-container">
+                        <div class="time-box">
+                            <label>Hora (Inicio):</label>
+                            <input type="time" id="timeInput" title="Hora de inicio">
+                        </div>
+                        <div class="time-box" id="endTimeContainer" style="display: none;">
+                            <label>Hora (Fin):</label>
+                            <input type="time" id="endTimeInput" title="Hora de fin">
+                        </div>
+                    </div>
+
+                    <textarea id="descInput" placeholder="Detalles o notas adicionales..."></textarea>
+                    
+                    <button id="addTaskBtn">Guardar Actividad</button>
+                </div>
+
+                <div id="taskList"></div>
+            </div>
+        </main>
+    </div>
+    <script type="module" src="script2.js"></script>
+</body>
+</html>
