@@ -46,7 +46,8 @@ const categoryToDotClass = {
     "Actividad": "cat-actividad",
     "Examen": "cat-examen",
     "Foro": "cat-foro",
-    "Lectura": "cat-lectura"
+    "Lectura": "cat-lectura",
+    "Otra": "cat-otra" 
 };
 
 const categoryToCardClass = {
@@ -54,7 +55,8 @@ const categoryToCardClass = {
     "Actividad": "Actividad",
     "Examen": "Examen",
     "Foro": "Foro",
-    "Lectura": "Lectura"
+    "Lectura": "Lectura",
+    "Otra": "Otra" 
 };
 
 // ==========================================

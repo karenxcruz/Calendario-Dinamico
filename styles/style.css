@@ -216,11 +216,13 @@ main {
    6. COLORES POR CATEGORÍA
    ========================================= */
 /* Colores para las etiquetas en el calendario */
+/* Colores para las etiquetas en el calendario */
 .cat-clase { background-color: #3b82f6; } 
 .cat-actividad { background-color: #10b981; } 
 .cat-examen { background-color: #ef4444; } 
 .cat-foro { background-color: #f59e0b; } 
 .cat-lectura { background-color: #8b5cf6; }
+.cat-otra { background-color: #475569; } 
 
 /* Colores para el borde de las tarjetas en el panel lateral */
 .task-card.Clase { border-left-color: #3b82f6; }
@@ -228,6 +230,7 @@ main {
 .task-card.Examen { border-left-color: #ef4444; }
 .task-card.Foro { border-left-color: #f59e0b; }
 .task-card.Lectura { border-left-color: #8b5cf6; }
+.task-card.Otra { border-left-color: #475569; } 
 
 
 /* =========================================
