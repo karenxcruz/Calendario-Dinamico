@@ -319,3 +319,21 @@ main {
     margin-bottom: 4px;
     font-weight: bold;
 }
+
+
+/* Botón para cambiar de calendario */
+.btn-enlace {
+    display: inline-block;
+    background-color: #6366f1;
+    color: white;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 14px;
+    margin-top: 10px;
+    transition: background 0.3s;
+}
+.btn-enlace:hover {
+    background-color: #4f46e5;
+}
